@@ -24,7 +24,9 @@
 ## [개발 일지]
       
   ### 22년 04월 27일
-      기본 개체 저장
+      
+     ##Userdefault 
+      
 swift안에 있는 float, Int, double, Bool, URL 등 기본적으로 제공하는 자료구조와 NSData, NSString, NSNumber NS관련 자료구조 또한 저장이 가능해서 활용성이 높다.
 
  
@@ -60,6 +62,7 @@ print(UserDefaults.standard)
 set(Any?, forKey: String)
 set 명령어를 통해 UserDefaults 데이터베이스에 등록을 할 수 있다. 기본적인 형식이 Dictionary 구조이기 때문에 앞쪽에 value값을 넣고 forKey에는 key값을 지정해야한다. 데이터가 존재하는지 확인하기 위해서는 해당 값의 형식에 따라 object, url, array, dictionary, string, stringArray, data, bool, integer, float, double 등을 호출하고 해당 값의 키를 forKey 파라미터에 입력을 하면 된다. value값이 String인 경우 값이 없을 수도 있는 경우가 있기 때문에 해당 값들을 사용할려면 ??나 guard 문을 사용하여 없을 때를 대비하는 것이 좋다. 기존의 사용하던 key의 value값을 바꿀 때도 set을 통해 똑같은 key값을 입력하면 변경이 가능하다.
 
+ ``` swift
 import Foundation
 print(UserDefaults.standard)
 UserDefaults.standard.set("Daesiker", forKey: "name")
@@ -77,7 +80,8 @@ print(UserDefaults.standard.double(forKey: "grade"))
 
 removeObject(forKey: String)
 해당 키에 데이터가 존재하면 삭제해주는 메서드이다. 여기서 주의할 점은 Bool, Int, Float, Double 타입의 value들은 해당 키가 없으면 기본값을 반환해준다. Bool은 false가 기본값이고 Int, Float, Double은 0을 반환한다.
-
+```
+``` swift
 import Foundation
 print(UserDefaults.standard)
 UserDefaults.standard.set("Daesiker", forKey: "name")
@@ -102,7 +106,7 @@ Daesiker
 0
 4.1
 */
-      
+      ```
   ### 22년 04월 13일
 
 테이블뷰 데이터 소스 객체는 UITableViewDataSource 프로토콜을 채택합니다.
