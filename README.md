@@ -23,6 +23,86 @@
   
 ## [개발 일지]
       
+  ### 22년 04월 27일
+      기본 개체 저장
+swift안에 있는 float, Int, double, Bool, URL 등 기본적으로 제공하는 자료구조와 NSData, NSString, NSNumber NS관련 자료구조 또한 저장이 가능해서 활용성이 높다.
+
+ 
+
+파일 참조 유지
+파일 시스템의 위치를 지정하는 파일 URL을 기본 자료구조를 저장할 때 사용하는 함수 대신에 bookmarkData
+
+(option:includingResourceValuesForKeys:relateTo) 메서드를 사용하여 NSURL 북마크 데이터를 생성하여 파일 URL에 대한 데이터가 손실되지 않게 도와준다.
+
+ 
+
+UserDefaults 값 변경에 대한 알림
+Default Notification Center을 통해 UserDefaults 값이 변경될 때마다 알림을 받을 수 있어서 관리하기 편하다.
+
+ 
+
+사용하기
+UserDefaults 클래스는 Foundation 프레임워크 안에 내장된 클래스이기 때문에 먼저 Foundation을 가져온다.
+
+ 
+
+UserDefaults.standard
+공유된 기본값 객체를 반환하는 함수이다.
+
+import Foundation
+print(UserDefaults.standard)
+
+//<NSUserDefaults: 0x121e13450>
+현재는 입력한 값이 하나도 없기 때문에 NSUserDefaults 값만 출력이 된다.
+
+ 
+
+set(Any?, forKey: String)
+set 명령어를 통해 UserDefaults 데이터베이스에 등록을 할 수 있다. 기본적인 형식이 Dictionary 구조이기 때문에 앞쪽에 value값을 넣고 forKey에는 key값을 지정해야한다. 데이터가 존재하는지 확인하기 위해서는 해당 값의 형식에 따라 object, url, array, dictionary, string, stringArray, data, bool, integer, float, double 등을 호출하고 해당 값의 키를 forKey 파라미터에 입력을 하면 된다. value값이 String인 경우 값이 없을 수도 있는 경우가 있기 때문에 해당 값들을 사용할려면 ??나 guard 문을 사용하여 없을 때를 대비하는 것이 좋다. 기존의 사용하던 key의 value값을 바꿀 때도 set을 통해 똑같은 key값을 입력하면 변경이 가능하다.
+
+import Foundation
+print(UserDefaults.standard)
+UserDefaults.standard.set("Daesiker", forKey: "name")
+UserDefaults.standard.set(27, forKey: "age")
+UserDefaults.standard.set(4.1, forKey: "grade")
+print(UserDefaults.standard.string(forKey: "name") ?? "no name")
+print(UserDefaults.standard.integer(forKey: "age"))
+print(UserDefaults.standard.double(forKey: "grade"))
+
+//<NSUserDefaults: 0x126613450>
+//Daesiker
+//27
+//4.1
+ 
+
+removeObject(forKey: String)
+해당 키에 데이터가 존재하면 삭제해주는 메서드이다. 여기서 주의할 점은 Bool, Int, Float, Double 타입의 value들은 해당 키가 없으면 기본값을 반환해준다. Bool은 false가 기본값이고 Int, Float, Double은 0을 반환한다.
+
+import Foundation
+print(UserDefaults.standard)
+UserDefaults.standard.set("Daesiker", forKey: "name")
+UserDefaults.standard.set(27, forKey: "age")
+UserDefaults.standard.set(4.1, forKey: "grade")
+print(UserDefaults.standard.string(forKey: "name") ?? "no name")
+print(UserDefaults.standard.integer(forKey: "age"))
+print(UserDefaults.standard.double(forKey: "grade"))
+
+UserDefaults.standard.removeObject(forKey: "age")
+
+print(UserDefaults.standard.string(forKey: "name") ?? "no name")
+print(UserDefaults.standard.integer(forKey: "age"))
+print(UserDefaults.standard.double(forKey: "grade"))
+/*
+
+<NSUserDefaults: 0x126613450>
+Daesiker
+27
+4.1
+Daesiker
+0
+4.1
+*/
+      
   ### 22년 04월 13일
 
 테이블뷰 데이터 소스 객체는 UITableViewDataSource 프로토콜을 채택합니다.
