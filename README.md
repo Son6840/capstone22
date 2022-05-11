@@ -23,6 +23,62 @@
   
 ## [개발 일지]
       
+ ###22년 05월 11일
+      
+      1. SwiftSoup 라이브러리 설치
+https://github.com/scinfu/SwiftSoup
+위 링크에서 cocoapods를 이용하는 방식을 사용
+terminal을 이용하여 해당 프로젝트 폴더로 가서 pod init 하여 Podfile을 생성
+Podfile안에 pod 'SwiftSoup'을 추가
+그 후 pod install 하면 설치가 완료
+ 
+
+2. WebCrawling 준비하기
+사용할 ViewController 에서 import SwiftSoup를 해줍니다.
+웹 크롤링을 해올 함수를 선언합니다.
+웹 크롤링을 해올 사이트 url을 String으로 들고 와서 URL(string: url)로 설정합니다.
+let urlAddress = "https://auto.naver.com/car/main.nhn?yearsId=134453"
+
+guard let url = URL(string: urlAddress) else { return }
+ 
+
+혹시 모를 오류를 위해서 do ~ catch 문을 사용합니다.
+let html = try String(contentsOf: url, encoding: .utf8)
+
+let doc: Document = try SwiftSoup.parse(html)
+ 
+
+ 
+
+ 
+
+3. 정보 가져오기 (text)
+사이트에서 개발자 도구를 열어서 html 형식으로 된 코드를 확인합니다.
+가져오고 싶은 정보가 있는 곳을 CSS의 선택자를 select 안에 넣어서 지정하는 방식으로 가져옵니다.
+let title: Elements = try doc.select(".end_model").select("h3")
+
+carLabel.text = try title.text() // UI 세팅
+※ 위의 첫번째 줄 코드의 의미 → end_model이란 클래스를 가진 태그 안에 있는 h3 태그 정보를 title 상수에 저장해라
+
+ 
+
+ 
+
+4. 정보 가져오기 (Image)
+Image는 text에 비해서 조금 과정이 복잡했습니다.
+text를 가져오는 것처럼 가져온 후, URL(string: stringImage)와 같이 설정해주고
+Data 형태로 변환하여 이미지를 설정해줍니다.
+let imagesrc: Elements = try doc.select("div#carMainImgArea.img_group").select("div.main_img").select("img[src]")
+
+let stringImage = try imagesrc.attr("src").description
+
+let urlImage = URL(string: stringImage)
+
+
+let data = try Data(contentsOf: urlImage!)
+
+carImage.image = UIImage(data: data) // UI 세팅
+      
   ### 22년 04월 27일
       
    ## Userdefault 
