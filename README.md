@@ -37,15 +37,18 @@ Podfile안에 pod 'SwiftSoup'을 추가
 사용할 ViewController 에서 import SwiftSoup를 해줍니다.
 웹 크롤링을 해올 함수를 선언합니다.
 웹 크롤링을 해올 사이트 url을 String으로 들고 와서 URL(string: url)로 설정합니다.
+``` swift
 let urlAddress = "https://auto.naver.com/car/main.nhn?yearsId=134453"
 
 guard let url = URL(string: urlAddress) else { return }
- 
+ ```
 
 혹시 모를 오류를 위해서 do ~ catch 문을 사용합니다.
+``` swift
 let html = try String(contentsOf: url, encoding: .utf8)
 
 let doc: Document = try SwiftSoup.parse(html)
+``` swift
  
 
  
@@ -55,9 +58,11 @@ let doc: Document = try SwiftSoup.parse(html)
 3. 정보 가져오기 (text)
 사이트에서 개발자 도구를 열어서 html 형식으로 된 코드를 확인합니다.
 가져오고 싶은 정보가 있는 곳을 CSS의 선택자를 select 안에 넣어서 지정하는 방식으로 가져옵니다.
+``` swift
 let title: Elements = try doc.select(".end_model").select("h3")
 
 carLabel.text = try title.text() // UI 세팅
+      ```
 ※ 위의 첫번째 줄 코드의 의미 → end_model이란 클래스를 가진 태그 안에 있는 h3 태그 정보를 title 상수에 저장해라
 
  
