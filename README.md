@@ -48,7 +48,7 @@ guard let url = URL(string: urlAddress) else { return }
 let html = try String(contentsOf: url, encoding: .utf8)
 
 let doc: Document = try SwiftSoup.parse(html)
-``` swift
+```
  
 
  
@@ -62,7 +62,7 @@ let doc: Document = try SwiftSoup.parse(html)
 let title: Elements = try doc.select(".end_model").select("h3")
 
 carLabel.text = try title.text() // UI 세팅
-      ```
+```
 ※ 위의 첫번째 줄 코드의 의미 → end_model이란 클래스를 가진 태그 안에 있는 h3 태그 정보를 title 상수에 저장해라
 
  
@@ -73,6 +73,7 @@ carLabel.text = try title.text() // UI 세팅
 Image는 text에 비해서 조금 과정이 복잡했습니다.
 text를 가져오는 것처럼 가져온 후, URL(string: stringImage)와 같이 설정해주고
 Data 형태로 변환하여 이미지를 설정해줍니다.
+``` swift
 let imagesrc: Elements = try doc.select("div#carMainImgArea.img_group").select("div.main_img").select("img[src]")
 
 let stringImage = try imagesrc.attr("src").description
@@ -83,6 +84,7 @@ let urlImage = URL(string: stringImage)
 let data = try Data(contentsOf: urlImage!)
 
 carImage.image = UIImage(data: data) // UI 세팅
+```
       
   ### 22년 04월 27일
       
