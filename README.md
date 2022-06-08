@@ -2,7 +2,7 @@
 
 <b>팀명 : 스윗프트 <br>
 <b>이름 : 손상배 (팀장 : 기획,개발) <br>
-<b>졸업작품 소개 사이트 : https://son6840.github.io/SweeftCapstone/ <br>
+<b>졸업작품 소개 사이트 : https://kang-jae-heok.github.io/SweetftWeb/ <br>
 <b>포트폴리오 소개 사이트 : <br>
 
 ## [졸업작품 소개]
